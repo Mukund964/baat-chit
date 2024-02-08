@@ -5,10 +5,14 @@ const io = require('socket.io')(server);
 
 io.on('connection' , (socket) => {
     console.log("device joined chat" , socket.id);
+    socket.on('from_client',()=>{
+        console.log('From client End');
+    })
     setInterval(() => {
-    socket.emit('from_server')    
+        socket.emit('from_server')    
     }, 2000);
 })
+
 
 app.use('/',express.static(__dirname + '/public'));
 server.listen(3000,()=>{
