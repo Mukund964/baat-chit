@@ -5,12 +5,12 @@ const io = require('socket.io')(server);
 
 io.on('connection' , (socket) => {
     console.log("device joined chat" , socket.id);
-    socket.on('from_client',()=>{
-        console.log('From client End');
+    socket.on('from_client',(data)=>{
+        console.log(data.msg);
+        //socket.emit('msg_rcvd',data.msg);  --> socket.emit -- only sender side
+        //socket.broadcast.emit('msg_rcvd',data.msg) -> everyone in the room except the sender
+        socket.emit('msg_rcvd',data.msg) //-> both the sender and caller
     })
-    setInterval(() => {
-        socket.emit('from_server')    
-    }, 2000);
 })
 
 
